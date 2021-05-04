@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- 实现对象的 Map 函数类似 Array.prototype.map -->
+    <script>
+        Object.prototype.map = function (handleFn, thisValue) {
+            const obj = this;
+            let res = {};
+            for (let prop in obj) {
+                if (obj.hasOwnProperty(prop)) {
+                    res[prop] = handleFn.call(thisValue, obj[prop], prop, obj);
+                }
+            }
+            return res;
+        };
+        // 测试用例
+        var obj = {
+            name: 'sunny',
+            sex: 'man'
+        };
+        var res = obj.map(function (val, prop, obj) {
+            // console.log(this);
+            console.log(val, prop, obj);
+            return prop + '--' + val;
+        }, { name: 'thisthis' });
+        console.log('res:', res);
+    </script>
+</body>
+
+</html>
