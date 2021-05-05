@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    // 主题，接收状态变化，并通知每个观察者
+    class Sub{
+            constructor(){
+                this.state = 0
+                this.observers = []
+            }
+            // 获取状态
+            getState (){
+                return this.state
+            }
+            // 设置状态
+            setState(state){
+                this.state = state
+                this.notify()
+            }
+            // 新增观察者
+            attach(observer){
+                this.observers.push(observer)
+            }
+            // 通知每个观察者
+            notify(){
+                this.observers.forEach(observer =>{
+                    observer.update()
+                })
+            }
+        }
+    // 观察者，等待被通知
+    class Observe{
+        constructor(name,sub){
+            this.name = name
+            this.sub = sub
+            this.sub.attach(this)
+            console.log("shabi"+this);
+        }
+        update(){
+            console.log(`${this.name} 观察者更新了state：${this.sub.getState()}`);
+        }
+    }
+    function handleInput(e){
+        let event = e || event
+        s.setState(event.target.value)
+        // s2.setState(event.target.value)
+    }
+    // 实例化一个主题
+    let s = new Sub()
+    // 添加观察者实例
+    let o1 = new Observe('o1',s)
+    let o2 = new Observe('o2',s)
+
+  </script>
+  <input type="text" id="app" oninput="handleInput(event)">
+</body>
+</html>

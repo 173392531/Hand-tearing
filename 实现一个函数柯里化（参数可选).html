@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    function add() {
+      // 先接受第一个参数，并保存到args中
+      const _args = [...arguments];
+      console.log('外部的args：'+_args);
+      function fn() {
+        // 在此函数方法内接受余下的参数，并在此处理它们，把它们追加到args数组中
+        console.log('内部的args：'+_args);
+        console.log('内部的arguments'+arguments);
+        _args.push(...arguments);
+        return fn;//用于接受余下的参数
+      }
+      // 在fn上定义一个toString方法，打印时自动将其打印出来
+      fn.toString = function () {
+        return _args.reduce((sum, cur) => sum + cur);
+      }
+      return fn;
+    }
+    // const curring = (fn) => {
+    //   const exec = (sumArgs) => {
+    //     return sumArgs.length >= fn.length ? fn(...sumArgs) : (...args) => exec([...sumArgs, ...args])
+    //   }
+    //   return exec([])
+    // }
+
+    console.log(add(2)(5)(4, 9));
+  </script>
+</body>
+
+</html>

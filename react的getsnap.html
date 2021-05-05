@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>hello_react</title>
+</head>
+
+<body>
+  <!-- 准备好一个“容器” -->
+  <div id="root"></div>
+
+  <!-- 引入react核心库 -->
+  <script type="text/javascript" src="js/react.development.js"></script>
+  <!-- 引入react-dom，用于支持react操作DOM -->
+  <script type="text/javascript" src="js/react-dom.development.js"></script>
+  <!-- 引入babel，用于将jsx转为js -->
+  <script type="text/javascript" src="js/babel.min.js"></script>
+
+  <script type="text/babel"> /* 此处一定要写babel */
+
+    class SnapshotSample extends React.Component {
+      constructor(props) {
+        super(props);
+        this.state = {
+          messages: [],//用于保存子div
+        }
+      }
+
+      handleMessage() {//用于增加msg
+        this.setState(pre => ({
+          messages: [`msg: ${pre.messages.length}`, ...pre.messages],
+        }))
+      }
+      componentDidMount() {
+
+        for (let i = 0; i < 20; i++) this.handleMessage();//初始化20条
+        this.timeID = window.setInterval(() => {//设置定时器
+          if (this.state.messages.length > 200) {//大于200条，终止
+            window.clearInterval(this.timeID);
+            return;
+          } else {
+            this.handleMessage();
+          }
+        }, 1000)
+      }
+      componentWillUnmount() {//清除定时器
+        window.clearInterval(this.timeID);
+      }
+      getSnapshotBeforeUpdate() {//很关键的，我们获取当前rootNode的scrollHeight，传到componentDidUpdate 的参数perScrollHeight
+        // console.log(this.rootNode.scrollHeight);
+        return this.rootNode.scrollHeight;
+      }
+      componentDidUpdate(perProps, perState, perScrollHeight) {
+        const curScrollTop = this.rootNode.scrollTop;
+        if (curScrollTop < 5) return;
+        // console.log(perScrollHeight);
+        this.rootNode.scrollTop = curScrollTop + (this.rootNode.scrollHeight - perScrollHeight);
+        //加上增加的div高度，就相当于不动
+      }
+      render() {
+        // console.log(node);
+        return (
+          // ref附带一个回调函数，函数在组件挂载或者卸载的时候立刻调用，
+          // 当ref属性用于HTML元素（对应react的component）时，底层的DOM元素会作为参数传给回调函数
+          // 这里就是说node这个形参实际接受了rootNode的dom元素，
+          // 然后回调函数中将拿到的dom赋值给之前声明的rootNode
+          <div className='wrap' ref={node => (this.rootNode = node)}>
+            { this.state.messages.map(msg => (
+              <div>{msg} </div>
+            ))}
+          </div>
+        );
+      }
+    }
+    ReactDOM.render(
+      <SnapshotSample />,
+      document.getElementById("root")
+    )
+
+  </script>
+</body>
+<style>
+  .wrap {
+    height: 100px;
+    width: 200px;
+    padding: 1px solid #eee;
+    overflow: auto;
+  }
+</style>
+
+</html>

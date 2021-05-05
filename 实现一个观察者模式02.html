@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    // 先设置一个主题
+    class Sub{
+      constructor(){
+        this.state=0
+        this.observers=[]
+      }
+      // 获取状态
+      getState(){
+        return this.state
+      }
+      // 存储状态
+      setState(state){
+        this.state=state
+        this.notify()
+      }
+      // 通知观察者的方法
+      notify(){
+        this.observers.forEach(observer=>{
+          observer.benotified()
+        })
+      }
+      // 新增观察者的方法
+      attach(observer){
+        this.observers.push(observer)
+      }
+    }
+    // 定义观察者类
+    class Observer{
+      constructor(name,sub){
+        this.name=name
+        this.sub=sub
+        this.sub.attach(this)
+      }
+      // 被通知的观察者发出点声音让你知道
+      benotified(){
+        console.log(`这位观察者${this.name}被通知了${this.sub.getState()}`);
+      }
+    }
+    let s=new Sub
+    let shq=new Observer('shq',s)
+    let pjm=new Observer('pjm',s)
+    function handleInput(e){
+      let event=e || event
+      s.setState(event.target.value)
+    }
+  </script>
+  <input type="text" oninput="handleInput(event)">
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <!--  关于arg*1000：打个比方，你的理解是：我通知你：1小时后到老板办公室去，1小时后你去了。
+    等你回来后我又通知你：2小时后到老板办公室去，你回来之后2小时后你去了。
+    等你回来后我又通知你：3小时后到老板办公室去...加起来总共15个小时。
+
+    而实际情况是：我一次就通知你：1小时后到老板办公室去，
+    2小时后到老板办公室去，3小时后到老板办公室去，
+    4小时后到老板办公室去，5小时后到老板办公室去，
+    结果是你每隔一个小时就去办公室一次，加起来总共5个小时。
+
+    所以，类比过来，这个for循环并不是你想象的那样：注册一个sTimer(1),
+    等一秒，然后才能注册sTimer(2),这样完成。
+    而是一瞬间把5个事件（sTimer(1),sTimer(2),sTimer(3),sTimer(4),
+    sTimer(5),）都注册了，所以这5个事件是同时开始执行的，
+    同时开始计时的。所以结果不是1秒后sTimer(1),之后2秒后sTimer(2)...
+    而是——就一个具体时间来说：10：10：10打开网页，11秒sTimer(1),12秒sTimer(2)
+    ...因为它们是同一个时间起点，分别等1~5秒执行的，而不是等前一个sTimer结束后才开始计时的。
+
+原文链接：https://blog.csdn.net/phoebe0549/article/details/8683843 -->
+  <script>
+    for (var i = 0; i < 10; i++) {
+      (function (arg) {
+        setTimeout(function run() {
+          console.log(arg)
+        }, arg * 1000)
+      })(i)
+    }
+  </script>
+</body>
+
+</html>

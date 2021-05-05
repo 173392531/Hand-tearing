@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    function myInstanceof(obj,fn){  
+      let x=obj.__proto__
+      console.log(x);
+      let y=fn.prototype
+      console.log(y);
+      while(1){
+        if(x===null){
+          return false
+        }
+        if(x=y){
+          return true
+        }
+        x=x.__proto__
+        // console.log(x);
+      }
+    }
+    let arr=[1,2,3,4]
+    console.log(myInstanceof(arr,Array));
+  </script>
+</body>
+</html>

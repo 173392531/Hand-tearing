@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // instanceof 是通过原型链判断的，即判断构造函数的原型对象是否在 obj 的原型链上
+    function InstanceOf(obj, Fun) {
+      let left = onj.__proto__
+      let right = Fun.prototype
+      while (1) {
+        if (left === null) {
+          return false
+        }
+        if (left === right) {
+          return true
+        }
+        left = left.__proto__
+      }
+    }
+
+  </script>
+</body>
+
+</html>

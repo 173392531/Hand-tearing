@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    class EventEmitter {
+      constructor() {
+        //初始值为空对象
+        this._events = Object.create(null)
+      }
+      //监听事件
+      on(event, fn) {
+        //如果是数组，则循环遍历执行on
+        if (Array.isArray(event)) {
+          event.forEach(item => {
+            this.on(item, fn)
+          })
+        } else {
+          (this._events[event] || (this._events[event] = [])).push(fn)
+        }
+      }
+      //关闭事件
+      off(event, fn) {
+        //如果参数为空，则关闭所有的事件
+        if (!arguments.length) {
+          //设置为初始值
+          this._events = Object.create(null)
+          return
+        }
+        //event支持数组，即设置多个事件
+        if (Array.isArray(event)) {
+          event.forEach(item => {
+            this.off(item, fn)
+          })
+          return
+        }
+        //如果传进来的事件没有emit，则返回
+        if (!this._events[event]) return
+        //如果没有传回调函数，则默认移除该事件下的所有回调
+        if (!fn) {
+          this._events[event] = []
+          return
+        }
+        //否则，移除与fn相同的回调
+        if (fn) {
+          const cbs = this._events[event]
+          let i = this._events[event].length
+          while (i--) {
+            if (cbs[i] === fn || cbs[i].fn === fn) {
+              //这里可以直接用cbs，是因为this._events[event]是引用类型，cbs指向的是同一个数据
+              cbs.splice(i, 1)
+              continue
+            }
+          }
+        }
+      }
+      //只执行一次
+      once(event, fn) {
+        //自定义拦截器
+        const on = () => {
+          this.off(event, on)
+          fn.apply(this, arguments)
+        }
+        on.fn = fn
+        console.log(on)
+        this.on(event, on)
+      }
+      //派发事件
+      emit(event, ...args) {
+        const cbs = this._events[event]
+        if (cbs) {
+          cbs.forEach(fn => {
+            fn.apply(this, args)
+          })
+        }
+      }
+    }
+
+    const baseEvent = new EventEmitter()
+
+    function cb(value) {
+      console.log("hello " + value)
+    }
+    baseEvent.once("click", cb)
+    // baseEvent.off("click")
+    baseEvent.emit("click", '2020')
+    console.log(baseEvent._events)
+  </script>
+</body>
+
+</html>

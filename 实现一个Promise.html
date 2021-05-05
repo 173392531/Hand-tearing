@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <!-- Promise的核心是“发布-订阅”模式，因此需要一个doneList属性和一个failList属性，用来存储所有订阅者。
+
+    catchCb 属性用来存储产生异常时执行的回调函数。
+
+    done和fail负责将单个订阅放进doneList或failList。
+
+    catch负责放进异常时的回调函数。
+
+    then和done、fail一样，不同在于接受两个参数，分别放进doneList 和 failList。
+
+    resolve实现发布，此时遍历doneList，执行其中所有订阅者。
+
+    reject实现发布，此时遍历failList，执行其中所有订阅者 
+
+    constructor里为什么要使用setTimeout为0s？
+    
+    答：目的是将其里面的代码放入等待队列，待所有回调函数全部转入Promise容器时，才执行等待队列的代码。-->
+  <script>
+
+    class MyPromise {
+
+      constructor(fn) {
+        this.doneList = [];
+        this.failList = [];
+        this.catchCb = function () { };
+        setTimeout(() => {
+          try {
+            fn(this.resolve.bind(this), this.reject.bind(this));
+          } catch (e) {
+            this.catchCb(e);
+          }
+        }, 0)
+      }
+      // 将 .then里的第一个参数加入到成功队列
+      done(success) {
+        if (typeof success === "function") {
+          this.doneList.push(success)
+        } else {
+          throw new Error("传入success的参数必须为function！");
+        }
+        return this;
+      }
+      // 将 .then里的第二个参数加入到失败队列
+      fail(fail) {
+        if (typeof fail === "function") {
+          this.failList.push(fail)
+        } else {
+          throw new Error("传入fail的参数为必须为function！");
+        }
+        return this;
+      }
+      // 成功时，遍历成功队列，执行里面的所有函数
+      resolve(res) {
+        this.doneList.forEach(fn => {
+          fn(res);
+          this.doneList.shift();
+        })
+      }
+      // 成功时，遍历失败队列，执行里面的所有函数
+      reject(err) {
+        this.failList.forEach(fn => {
+          fn(err);
+          this.failList.shift();
+        })
+      }
+      // 将 .then里的第一、二个参数分别加入到成功队列、失败队列
+      then(success, fail) {
+        this.done(success || function () { });
+        this.fail(fail || function () { });
+        return this;
+      }
+      // 程序出现异常时执行的函数
+      catch(errFn) {
+        if (typeof errFn !== "function") throw new Error("catch传入的参数必须为function");
+        this.catchCb = errFn;
+      }
+
+    }
+  </script>
+</body>
+
+</html>

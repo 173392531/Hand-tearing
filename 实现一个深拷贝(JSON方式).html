@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    var obj2={
+      name:'rick',
+      age:'21',
+      fav:{
+        ball:'basketball',
+        book:['book1','book2','book3']
+      }
+    }
+   var newobj= JSON.parse(JSON.stringify(obj2))
+  //  浅拷贝，修改newobj2的话obj2的值也会随之变动
+   var newobj2=Object.assign(obj2)
+   console.log(newobj);
+   console.log(newobj2);
+  </script>
+</body>
+</html>

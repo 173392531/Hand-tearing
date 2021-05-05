@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=\, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    function myDeep(newobj,oldobj){
+      for(var k in oldobj){
+        // 判断各个索引下的内容是什么类型
+        var item=oldobj[k]
+        if(item instanceof Array){
+          newobj[k]=[]
+          myDeep(newobj[k],item)
+        }else if(item instanceof Object){
+          newobj[k]={}
+          myDeep(newobj[k],item)
+        }else{
+          newobj[k]=item
+        }
+      }
+      return newobj
+    }
+    var obj2={
+      name:'rick',
+      age:'21',
+      fav:{
+        ball:'basketball',
+        book:['book1','book2','book3']
+      }
+    }
+    var newobj1=[]
+    console.log(myDeep(newobj1,obj2)); 
+  </script>
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <p>11111</p>
+  <p>11111</p>
+  <p>11111</p>
+  <p>11111</p>
+  <p>11111</p>
+  <p>11111</p>
+  <p>11111</p>
+  <p>11111</p>
+  <p>11111</p>
+  <p>11111</p>
+  <p>11111</p>
+  <p>11111</p>
+  <p>11111</p>
+  <p>11111</p>
+  <p>11111</p>
+  <p>11111</p>
+  <p>11111</p>
+  <p>11111</p>
+  <p>11111</p>
+  <p>11111</p>
+  <p>11111</p>
+  <p>11111</p>
+  <p>11111</p>
+  <p>11111</p>
+  <p>11111</p>
+  <p>11111</p>
+  <p>11111</p>
+  <p>11111</p>
+  <p>11111</p>
+  <p>11111</p>
+  <p>11111</p>
+  <p>11111</p>
+  <p>11111</p>
+  <p>11111</p>
+  <script>
+    function showTop() {
+      let scrollTop = document.body.scrollTop || document.documentElement.scrollTop
+      console.log('滚动条位置' + scrollTop);
+    }
+    //防抖实现：
+    function debounce(fn, delay) {
+      let timer = null
+      return function () {
+        if (timer) {
+          clearTimeout(timer)
+        }
+        timer = setTimeout(fn, delay)
+      }
+    }
+    // window.onscroll = debounce(showTop, 1000)
+    // 节流实现
+    function throttle(fn,delay){
+      let valid=true
+      return function(){
+        if(!valid){
+          return false
+        }
+        valid=false
+        setTimeout(()=>{
+          fn()
+          valid=true
+        },delay)
+      }
+    }
+    window.onscroll=throttle(showTop,1000)
+  </script>
+</body>
+
+</html>

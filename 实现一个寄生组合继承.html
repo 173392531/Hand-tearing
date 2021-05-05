@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    function SuperType(name) {
+      //父函数的自定义属性
+      this.name = name;
+      this.colors = ["red", "orange", "black"];
+    };
+
+    SuperType.prototype.sayName = function () {
+      //父函数原型中定义的方法
+      console.log(this.name);
+    };
+
+    //定义子函数
+    function SubType(name, age) {
+      //子函数继承父函数的属性
+      //借用构造函数实现对实例属性的继承
+      SuperType.call(this, name);
+      //子函数定义自己的属性
+      this.age = age;
+    }
+
+    //子函数继承父函数的方法
+    //通过原型链对原型属性和方法的继承
+    SubType.prototype = Object.create(SuperType.prototype);//Object.create返回一个以prototype为原型并且包含指定属性的新对象。
+    //下面注释的这种写法子类会具有父类实例的方法，不推荐
+    //SubType.prototype = new SuperType();
+    SubType.prototype.constructor = SubType;
+
+    //自定义子函数的方法
+    SubType.prototype.sayAge = function () {
+      console.log(this.age);
+    }
+    console.log(SuperType.prototype);
+    // //测试
+    // var instance1 = new SubType("LLL", "24");
+    // instance1.colors.push("pink");
+    // console.log(instance1.colors);//"red,orange,black,pink"
+    // instance1.sayName;//"LLL"
+    // instance1.sayAge;//"24"
+
+    // //测试2
+    // var instance2 = new SubType("XXX", "25");
+    // console.log(instance2.colors);//"red,orange,black"
+    // instance2.sayName;//"XXX"
+    // instance2.sayAge;//"25"
+  </script>
+</body>
+
+</html>

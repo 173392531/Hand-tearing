@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    // 红灯3s一亮，绿灯2s一亮，黄灯1s一亮
+    red=()=>{
+      console.log('红灯亮');
+    }
+    green=()=>{
+      console.log('绿灯亮');
+    }
+    yellow=()=>{
+      console.log('黄灯亮');
+    }
+    // 定时执行机制与判断逻辑
+    var step =(timer,light,callback)=>{
+      var timer1=setTimeout(()=>{
+        if(light === 'red'){
+          red()
+        }
+        if(light === 'green'){
+          green()
+        }
+        if(light === 'yellow'){
+          yellow()
+        }
+        callback()
+      },timer)
+    }
+    // 回调函数
+    var task = () => {
+      step(3000,'red',()=>{
+        step(2000,'green',()=>{
+          step(1000,'yellow',task)
+        })
+      })
+    }
+    task()
+  </script>
+</body>
+</html>

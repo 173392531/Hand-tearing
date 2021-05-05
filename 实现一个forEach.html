@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+
+var arr = ['xiaoming', 'lihua','ss','bluek']
+Array.prototype.for_Each = function (fn) {
+    for (var i = 0; i < this.length; i++) {
+        fn(this[i])
+    }
+}
+// for_Each的()内是一个回调函数，即为fn，
+// 在forEach内部又将this.[i]传给这个回调函数：(item)=>{console.log(item)}从而将每一项都打印出来
+arr.for_Each((item) => {
+    console.log(item)
+})
+  </script>
+</body>
+</html>

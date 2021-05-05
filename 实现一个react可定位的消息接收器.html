@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id="root"></div>
+  <script type="text/javascript" src="js/react.development.js"></script>
+  <script type="text/javascript" src="js/react-dom.development.js"></script>
+  <script type="text/javascript" src="js/babel.min.js"></script>
+  <script type="text/babel">
+    class SnapshotSample extends React.Component{
+      constructor(props){
+        super(props);
+        this.state={
+          messages:[],//用于保存子div
+        }
+      }
+      handleMessage(){
+        this.setState(pre=>({
+          messages:[`msg:${pre.messages.length}`,...pre.messages],
+        }))
+      }
+      componentDidMount(){
+          for(let i=0;i<20;i++)this.handleMessage();
+          this.timeID=window.setInterval(()=>{
+            if(this.state.messages.length>200){
+              window.clearInterval(this.timeID)
+              return 
+            }else{
+              this.handleMessage()
+            }
+          },1000)
+      }
+      componentWillUnmount(){
+        window.clearInterval(timeID)
+      }
+      getSnapshotBeforeUpdate(){
+        return this.rootNode.scrollHeight;
+      }
+      componentDidUpdate(perProps,perState,perScrollHeight){
+        console.info('perProps:'+perProps);
+        console.log('perState:'+perState);
+        console.log('perScrollHeight:'+perScrollHeight);
+        const curScrollTop=this.rootNode.scrollTop;
+        if(curScrollTop<5)return ;
+        this.rootNode.scrollTop=curScrollTop+(this.rootNode.scrollHeight - perScrollHeight)
+      }
+      render(){
+        return (
+          <div className='wrap' ref={node=>(this.rootNode=node)}>
+            { this.state.messages.map(msg=>(
+              <div>{msg}</div>
+            ))}
+            </div>
+        );
+      }
+    }
+    ReactDOM.render(
+      <SnapshotSample />,
+      document.getElementById('root')
+    )
+  </script>
+
+</body>
+<style>
+  .wrap{
+    height:100px;
+    width:200px;
+    padding: 1px solid #eee;
+    overflow: auto;
+  }
+</style>
+</html>

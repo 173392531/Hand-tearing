@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    function Person(name){
+      this.name=name;
+      this.sum=function(){
+        alert(this.name)
+      }
+    }
+
+    function content(obj){
+      function F(){}
+      F.prototype=obj;
+      return new F();
+    }
+    var con =content(Person.prototype)
+    function Sub(){
+      Person.call(this)
+    }
+    Sub.prototype=con;
+    con.constructor=Sub;
+    var sub1=new Sub()
+
+  </script>
+</body>
+</html>

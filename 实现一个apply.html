@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    var person = {
+      fullName: function(txt,s) {
+        console.log(txt + s+' '+this.firstName + " " + this.lastName);
+      }
+    }
+    var person1 = {
+      firstName:"John",
+      lastName: "Doe"
+    } 
+    Function.prototype.myApply=function(context,args){
+      if (typeof this !== 'function') {
+        throw new TypeError('not funciton')
+      }
+      context.fn=this || window
+      args=args || []
+      var result=context.fn(...args)
+      delete context.fn;
+      return result
+    }
+    person.fullName.myApply(person1, ["Hello","wode"]);
+
+// 参考文章：https://www.jianshu.com/p/83ecbcd09246
+  </script>
+</body>
+</html>

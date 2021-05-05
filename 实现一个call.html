@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <!-- 第一步 person.fullName.call(person1),
+    调用call方法是把this指向了person1,
+    解决方法就是给person1上添加一个方法等于 person.fullName -->
+    <!-- 第二步 从call函数传入的第二个参数开始，
+      作为person.fullName的参数传入 -->
+  <script>
+    var person = {
+      fullName: function(txt,s) {
+        console.log(txt + s+' '+this.firstName + " " + this.lastName);
+      }
+    }
+    var person1 = {
+      firstName:"John",
+      lastName: "Doe"
+    } 
+    Function.prototype.myCall=function(context,...args){
+    if (typeof this !== 'function') {
+      throw new TypeError('not funciton')
+    }
+    context.fn=this || window
+    var result=context.fn(...args)
+    delete context.fn;
+    return result;
+    }
+    person.fullName.myCall(person1, "Hello","wode");
+
+      var parent={
+        alertName: function(name){
+          alert(name)
+        }
+      }
+      
+      function Super(age){
+        this.age=age
+        alert(age)
+      }
+    function Child(){
+      
+    }
+    var child1=new Child()
+    parent.alertName.myCall(child1,'jack')
+    Super.myCall(child1,18)
+
+// 参考文章：https://www.jianshu.com/p/83ecbcd09246
+  </script>
+</body>
+</html>

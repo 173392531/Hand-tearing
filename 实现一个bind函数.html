@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    Function.prototype.myBind = function () {
+      if (typeof this != 'function') {// 判断调用者是不是函数
+        throw new TypeError('调用myBind 需要为一个函数来触发');
+      }
+      var self = this; //保存原函数 即调用myBind的函数 eg： fn.mybind(obj)  this 就是fn
+      var context = [].shift.call(arguments) //参数中的第一个截取下来 这个为即将转变为的执行上下文对象 eg： fn.mybind(obj)  context 就是obj
+      console.log(context);
+      var args = [].slice.call(arguments) //剩余的参数保存为一个数组
+      return function () {
+        self.apply(context, [].concat.call(args, [].slice.call(arguments)))  //绑定myBind的参数和执行myBind的参数也进行合并处理  下方有演示介绍
+      }
+    }
+    var a = "window"
+    var obj = {
+      a: 'obj'
+    }
+    function fn(b, c, d) {
+      console.log(this.a, arguments);
+    }
+    fn.myBind(obj, 'b', 'c', 'd')('e')	//输出 obj ["b", "c", "d", "e"]
+    fn.myBind(obj, 'b', 'c')('d', 'e')	//输出 obj ["b", "c", "d", "e"]
+    fn.myBind(obj)('b', 'c', 'd', 'e')	//输出 obj ["b", "c", "d", "e"]
+
+// 原文链接：https://blog.csdn.net/qq_37366474/article/details/112285447
+  </script>
+</body>
+
+</html>

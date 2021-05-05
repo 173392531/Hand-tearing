@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    const curry = (fn, arr = []) => {
+      return (...args) => {
+        if (fn.length === [...arr, ...args].length) {
+          return fn(...arr, ...args)
+        } else {
+          return curry(fn, [...arr, ...args])
+        }
+      }
+    }
+    let curryPlus = curry((a, b, c, d) => a + b + c + d)
+    console.log(curryPlus(1)(2)(3)(4));
+    console.log(curryPlus(1, 2, 3)(4));
+
+  </script>
+</body>
+
+</html>

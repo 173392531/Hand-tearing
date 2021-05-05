@@ -1,0 +1,27 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>进制转换</title>
+	</head>
+	<body>
+		<script type="text/javascript">
+			// 十进制转16进制
+			var array = [170,30,19,0,0,0,0,0,0,3,164,0,0,1,0,13,14,15,0,255,127,255,200,255,0,55,127,1,255,88,171];
+			var newArray = array.map(item=>{
+				return item.toString(16);
+			});
+			console.log(newArray);
+			
+			// 十六进制转十进制
+			var arr = ['aa','0f','13','00','00','00','00','00','00','02','01','01','00','00','00','da'];
+			var arr2 = arr.map(item=>{
+				return parseInt(item,16);
+			})
+			console.log(arr2);
+		</script>
+	</body>
+</html>
+
+<!-- 原文链接：https://blog.csdn.net/xvzhengyang/article/details/84676494 -->

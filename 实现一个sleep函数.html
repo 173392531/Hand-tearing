@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    function sleep(delay) {
+      var start = (new Date()).getTime();
+      while ((new Date()).getTime() - start < delay) {
+        continue;
+      }
+    }
+
+    function test() {
+      console.log('111');
+      sleep(2000);
+      console.log('222');
+    }
+
+    test()
+
+
+//原文链接：https://blog.csdn.net/qq_36711388/article/details/89787637
+  </script>
+</body>
+
+</html>

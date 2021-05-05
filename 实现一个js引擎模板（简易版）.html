@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    /**
+ * 递归读取嵌套对象中的值
+ * 
+ * @param {Object} item 对象 {type:'process',msg:{date:'2018-4-17',content:'test'}}
+ * @param {Array} vars key值 ['msg','content']
+ * @param {int} i key值数组的下标
+ */
+    function getValue(item, vars, i) {
+      if (i === vars.length - 1) {
+        console.log(i);
+        console.log(item[vars[i]]);
+        return item[vars[i]];
+      }
+      if (item && item[vars[i]]) {
+        console.log(item[vars[i]]);
+        console.log(vars);
+        return getValue(item[vars[i]], vars, ++i);
+      } else {
+        return null;
+      }
+    }
+
+    /**
+     * 模板解析
+     * 
+     * @param {Object} item 待替换数据
+     * @param {String} placeHolder 字符串模板
+     */
+    function replacePlaceHolder(item, placeHolder) {
+      return placeHolder.replace(/\$\{([\w\.]+)\}/g, function (word, key) {
+        if (key && item) {
+          console.log(word);
+          console.log(key);
+          let vars = key.split('.');
+          console.log(vars);
+          console.log(item);
+          return getValue(item, vars, 0);
+        }
+        return null;
+      });
+    }
+    //模板
+    var ph = 'this is a ${type} , made in ${msg.date} and name is ${msg.name}';
+    //数据源
+    var item = { type: 'introduce', msg: { date: '2021-3-20', name: 'rick' } };
+
+    console.log(replacePlaceHolder(item, ph));
+  </script>
+</body>
+
+</html>

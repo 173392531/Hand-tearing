@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // xhr的api：
+    // open(): 初始化一个请求, 参数为: (method, url, [async])
+    // send(data): 发送请求
+    // abort(): 中断请求
+    // setRequestHeader(name, value): 设置请求头
+    function myAxios(obj) {
+      const { url, methods, data } = obj
+      return new Promise((resolve, reject) => {
+        const xhr = new XMLHttpRequest()
+        xhr.open(method, url)
+        // 每当 readyState 改变时，就会触发 onreadystatechange 事件。
+        xhr.onreadystatechange = () => {
+            // 0: 请求未初始化
+            // 1: 服务器连接已建立
+            // 2: 请求已接收
+            // 3: 请求处理中
+            // 4: 请求已完成，且响应已就绪
+          if (xhr.readyState != 4) {
+            return
+          }
+          if (xhr.status === 200) {
+            resolve(xhr.response)
+          } else {
+            // status的文本说明：如Created Accepted Not Found
+            reject(xhr.statusText)
+          }
+        }
+        xhr.send(data)
+      })
+    }
+  </script>
+</body>
+
+</html>

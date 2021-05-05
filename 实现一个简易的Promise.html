@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    function easyPromise(fn) {
+      // 先把easyPromise构造函数赋给that
+      var that = this
+      console.log(this);
+      // 第一步,定义 then()
+      this.then = function (cb) {
+        //先将 then() 括号里面的参数(回调函数)保存起来
+        that.cb = cb
+      }
+
+      // 定义一个 resolve
+      this.resolve = function (data) {
+        that.cb(data)
+      }
+
+      // 将 resolve 作为回调函数,传给fn
+      fn(this.resolve)
+    }
+    new easyPromise((resolve) => {
+      setTimeout(() => {
+        resolve("延时执行")
+      }, 1000)
+    }).then((data) => {
+      console.log(data)
+    })
+    // 原文链接：https://www.jianshu.com/p/7186e7d712fb?utm_campaign=maleskine&utm_content=note&utm_medium=seo_notes&utm_source=recommendation
+  </script>
+</body>
+
+</html>

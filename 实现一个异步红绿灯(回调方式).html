@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    // 红绿灯，红灯3s亮一次，绿灯1s亮一次，黄灯2s亮一次，并交替展示
+    function red() {console.log('红灯亮')}
+    function green() {console.log('绿灯亮')}
+    function yellow() {console.log('黄灯亮')}
+    // 回调
+    var step = (timer, light, callback) => {
+      var timer1 = setTimeout(() => {
+        if(light === 'red') {
+          red()
+        }
+        if(light === 'green') {
+          green()
+        }
+        if(light === 'yellow') {
+          yellow()
+        }
+        callback()
+      },timer)
+    }
+    // 回调
+    var task = () => {
+      step(3000,'red', () => {
+        step(1000,'green',() => {
+          step(2000, 'yellow', task)
+        })
+      })
+    }
+    task();
+
+  </script>
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    var Parent=function(name,age){
+      this.name=name
+      this.age=age
+    }
+    Parent.prototype.sayName=function(){
+      console.log(this.name);
+    }
+    let myNew=function(Parent,...rest){
+      // 1.以构造器的prototype属性为原型，创建新对象
+      let obj=Object.create(Parent.prototype)
+      let result =Parent.apply(obj,rest)
+      return typeof result==='Object'?result:obj
+    }
+  </script>
+</body>
+</html>

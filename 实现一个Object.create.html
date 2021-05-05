@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    function myCreate(proto){
+      function F() {}
+        //函数的原型设置为参数传进来的原型
+        F.prototype = proto;
+        // 返回一个F函数的实例，即此实例的__proto__指向为参数proto
+        return new F();
+    }
+    let res=myCreate(Object.prototype)
+    console.log(res);
+  </script>
+</body>
+</html>

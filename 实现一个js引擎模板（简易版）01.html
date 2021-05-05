@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    function getValue(item,vars,i){
+      if(i===vars.length-1){
+        return item[vars[i]]
+      }
+      if(item && item[vars[i]]){
+        return getValue(item[vars[i]],vars,++i)
+      }else{
+        return null
+      }
+    }
+
+    function replacePh(item,ph){
+      return ph.replace(/\$\{([\w\.]+)\}/g,function(word,key){
+        if(key&&item){
+          let vars=key.split('.');
+          return getValue(item,vars,0);
+        }
+        return null
+      })
+    }
+    //模板
+    var ph = 'this is a ${type} , made in ${msg.date} and name is ${msg.name}';
+    //数据源
+    var item = { type: 'introduce', msg: { date: '2021-3-20', name: 'rick' } };
+
+    console.log(replacePh(item, ph));
+  </script>
+</body>
+</html>

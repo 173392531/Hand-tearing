@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    function flaTten(arr) {
+      let lar = []
+      while (arr.length > 0) {
+        let res = arr.pop()
+        if (Array.isArray(res)) {
+          arr.push(...res)
+        } else {
+          lar.unshift(res)
+        }
+      }
+      return lar
+    }
+
+    console.log(flaTten([1, 2, [4, 5, [7, 8, [9, 10], 11], 12], 13]));
+  </script>
+</body>
+
+</html>
