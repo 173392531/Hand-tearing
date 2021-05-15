@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="app">
+<my-component1></my-component1>
+
+  </div>
+  <script src="https://unpkg.com/vue/dist/vue.js"></script>
+  <script>
+    Vue.component('my-component1', {
+      template:`<div>This is the first component!</div>`
+    })
+    const app = new Vue({
+      el: '#app',
+      data:{
+        num:12
+      }
+    })
+  </script>
+</body>
+
+</html>

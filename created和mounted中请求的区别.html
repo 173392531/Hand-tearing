@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="app">
+    {{num}}
+  </div>
+  <script src="https://unpkg.com/vue/dist/vue.js"></script>
+  <script>
+    const app = new Vue({
+      el: '#app',
+
+      data: {
+        num: 0
+      },
+
+      async created() {
+        console.log('created')
+        this.num = await this.getData('created')
+        console.log('获取异步数据结束')
+        console.timeEnd('created获取异步数据完成时长')
+      },
+
+      beforeMount() {
+        console.log('beforeMounted')
+      },
+
+      async mounted() {
+        console.log('mounted')
+        this.num = await this.getData('mounted')
+        console.log('获取异步数据结束')
+        console.timeEnd('mounted获取异步数据完成时长')
+      },
+
+      updated() {
+        console.log('updated')
+      },
+
+      methods: {
+        // 模拟异步请求
+        getData(lifecycle) {
+          console.log(`${lifecycle}开始获取异步数据`)
+          if (lifecycle === 'created') {
+            console.time('created获取异步数据完成时长')
+          } else {
+            console.time('mounted获取异步数据完成时长')
+          }
+          const genRandomNum = (min, max) => (Math.random() * (max - min + 1) | 0) + min
+          return new Promise(resolve => {
+            setTimeout(() => {
+              resolve(genRandomNum(100, 3000))
+            }, 2000)
+          })
+        }
+      },
+    })
+  </script>
+</body>
+
+</html>
