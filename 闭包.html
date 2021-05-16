@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- JavaScript特性：
+    闭包机制：闭包创建后，可以保存创建时的活动对象。
+    自加操作符：++，当++作为后缀操作符时，调用++的表达式的值为自加前的自加对象的值。
+
+    此处说明 ++操作符的特性。
+    var i = 0;
+    var eg = i++
+    console.log(i, eg) // 1 0
+
+     第一次调用A时，执行到console.log(a++)时，a已经完成自加，此时a的值为2，a++的值为1。
+
+    A(1)=1
+
+     第二次调用A时，A已经被重新赋值，指向了一个新的函数引用；
+
+     由于标识符A是在全局作用域定义的，所以在函数内部被重新赋值，在全局作用域也可以访问到重新赋值后的函数。
+
+     此时，也创建了一个闭包，该闭包保存了创建环境的活动对象。
+
+     此时活动对象：{ a: 2 }，同时，根据传入的数值2,确定 b = 2，b++值为3。
+
+     执行到 console.log(a + b++)，故而输出4
+
+    A(2)=4
+    ————————————————
+    版权声明：本文为CSDN博主「微  光」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
+    原文链接：https://blog.csdn.net/web_j/article/details/107491532 -->
+    <script>
+        var a=0,b=0;
+        function A(a) {
+            A=function(b){
+                alert(a+b++);
+            }
+            // console.log(a,b);
+            alert(a++)
+        }
+        A(1)
+        A(2)
+
+    </script>
+</body>
+</html>
