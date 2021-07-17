@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #box {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100px;
+            height: 100px;
+            background: red;
+        }
+    </style>
+</head>
+<body>
+<div id="box"></div>    
+<script>
+/*
+    el 元素
+    attr 样式
+    val 目标点
+    cb 动画结束之后，要做的事情
+
+    如果目标值 比 当前值大 ，返回一个正数，否则返回一个 负数
+*/    
+function move(el,attr,val){
+    let now = parseFloat(getComputedStyle(el)[attr]);
+    let speed = val>now?1:-1;
+    return new Promise((resolve)=>{
+        clearInterval(el.timer);
+        el.timer = setInterval(() => {
+            if(Math.abs(now - val) <= 0 ){
+                clearInterval(el.timer);
+                resolve();
+            } else {
+                now += speed;
+                el.style[attr] = now + "px";
+            }
+        }, 16);
+    }); 
+}
+{
+    let box = document.querySelector("#box");
+    function boxMove(){
+        move(box,"left",200).then(()=>{
+            return move(box,"top",200);
+        }).then(()=>{
+            return move(box,"left",0);
+        }).then(()=>{
+            return  move(box,"top",0);
+        }).then(()=>{
+            boxMove()
+        });
+    }
+    boxMove();
+        
+    
+}
+</script>    
+</body>
+</html>
