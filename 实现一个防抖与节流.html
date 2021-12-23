@@ -50,24 +50,23 @@
       console.log('滚动条位置：' + scrollTop);
     }
     window.onscroll = showTop
-    // 防抖实现：
-    function debounce(fn, delay) {
-      let timer = null //借助闭包
-      return function () {
-        if (timer) {
-          clearTimeout(timer)
-        }
-        timer = setTimeout(fn, delay) // 简化写法
-      }
-    }
-    window.onscroll = debounce(showTop, 1000)
+    // // 防抖实现：
+    // function debounce(fn, delay) {
+    //   let timer = null //借助闭包
+    //   return function () {
+    //     if (timer) {
+    //       clearTimeout(timer)
+    //     }
+    //     timer = setTimeout(fn, delay) // 简化写法
+    //   }
+    // }
+    // window.onscroll = debounce(showTop, 1000)
 
     // 节流实现：
     function throttle(fn, delay) {
       let valid = true
       return function () {
         // 第一次进入不会走这个判断，因为该函数内部还没有valid这个属性，只能继承自外界的true
-        console.log(valid);
         if (!valid) {
           //休息时间 暂不接客
           return false
@@ -80,7 +79,26 @@
         }, delay)
       }
     }
-    window.onscroll = throttle(showTop,1000) 
+
+    function throttle2(fn,delay){
+      let valid = true
+      return function (){
+        if(!valid)return false
+        valid = false
+        setTimeout(()=>{
+          fn()
+          valid = true
+        },delay)
+      }
+    }
+    // function throttle(cb,delay) {
+    //     let timer = 0
+    //     return function(){
+    //         clearTimeout(timer)
+    //         timer = setTimeout(cb,delay)
+    //     }
+    // }
+    window.onscroll = throttle2(showTop,1000) 
   </script>
 </body>
 

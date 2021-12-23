@@ -1,39 +1,80 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=\, initial-scale=1.0">
   <title>Document</title>
 </head>
+
 <body>
   <script>
-    function myDeep(newobj,oldobj){
-      for(var k in oldobj){
+    function myDeep(newobj, oldobj) {
+      for (var k in oldobj) {
         // 判断各个索引下的内容是什么类型
-        var item=oldobj[k]
-        if(item instanceof Array){
-          newobj[k]=[]
-          myDeep(newobj[k],item)
-        }else if(item instanceof Object){
-          newobj[k]={}
-          myDeep(newobj[k],item)
-        }else{
-          newobj[k]=item
+        var item = oldobj[k]
+        if (item instanceof Array) {
+          newobj[k] = []
+          myDeep(newobj[k], item)
+        } else if (item instanceof Object) {
+          newobj[k] = {}
+          myDeep(newobj[k], item)
+        } else {
+          newobj[k] = item
         }
       }
       return newobj
     }
-    var obj2={
-      name:'rick',
-      age:'21',
-      fav:{
-        ball:'basketball',
-        book:['book1','book2','book3']
+
+    //使用递归的方式实现数组、对象的深拷贝
+    function deepClone1(obj) {
+      //判断拷贝的要进行深拷贝的是数组还是对象，是数组的话进行数组拷贝，对象的话进行对象拷贝
+      var objClone = Array.isArray(obj) ? [] : {};
+      //进行深拷贝的不能为空，并且是对象或者是
+      if (obj && typeof obj === "object") {
+        for (key in obj) {
+          if (obj.hasOwnProperty(key)) {
+            if (obj[key] && typeof obj[key] === "object") {
+              objClone[key] = deepClone1(obj[key]);
+            } else {
+              objClone[key] = obj[key];
+            }
+          }
+        }
+      }
+      return objClone;
+    }
+
+    function deepClone3(obj){
+      const cloneObj = Array.isArray(obj) ? []:{}
+      for(let k in obj){
+        if(obj.hasOwnProperty(k)){
+          let item = obj[k]
+          if(item && typeof item === 'object'){
+            cloneObj[k] = deepClone3(obj[k])
+          }else{
+            cloneObj[k] = obj[k]
+          }
+        }
+      }
+      return cloneObj
+    }
+
+
+
+    var obj2 = {
+      name: 'rick',
+      age: '21',
+      fav: {
+        ball: 'basketball',
+        book: ['book1', 'book2', 'book3']
       }
     }
-    var newobj1=[]
-    console.log(myDeep(newobj1,obj2)); 
+    console.log(deepClone3(obj2));
+    var newobj1 = []
+    console.log(myDeep(newobj1, obj2));
   </script>
 </body>
+
 </html>

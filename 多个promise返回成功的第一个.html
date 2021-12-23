@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // 1.封装promise.all
+        //第一个成功的Promise
+        function firstProSuccess(allProMise) {
+            //遍历promise数组，根据返回值进行判断，当成功的时候，转为reject返回，当失败的时候转为resolve继续执行。
+            return Promise.all(allProMise.map(item => {
+                return item.then(
+                    res => Promise.reject(res),
+                    err => Promise.resolve(err)
+                )
+            })).then(
+                errors => Promise.reject(errors),
+                val => Promise.resolve(val)
+            )
+        }
+
+        // 2.实现promise.any
+        MyPromise.any = function (promises) {
+            return new Promise((resolve, reject) => {
+                promises = Array.isArray(promises) ? promises : []
+                let len = promises.length
+                // 用于收集所有 reject 
+                let errs = []
+                // 如果传入的是一个空数组，那么就直接返回 AggregateError
+                if (len === 0) return reject(new AggregateError('All promises were rejected'))
+                promises.forEach((promise) => {
+                    promise.then(value => {
+                        resolve(value)
+                    }, err => {
+                        len--
+                        errs.push(err)
+                        if (len === 0) {
+                            reject(new AggregateError(errs))
+                        }
+                    })
+                })
+            })
+        }
+
+        // 原文链接：https://blog.csdn.net/sisterAn/article/details/117210195
+
+    </script>
+</body>
+
+</html>

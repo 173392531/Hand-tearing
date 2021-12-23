@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+
+        // let obj = {
+        //     name: "qianzhixiang",
+        //     func: function (a, b) {
+        //         console.log(this.name, a, b);
+        //     }
+        // };
+        // obj.func(1, 2); // qianzhixiang 1 2
+        // let func = obj.func;
+        // func(1, 2); //   1 2
+        // let func_ = func.bind(obj);
+        // func_(1, 2);// qianzhixiang 1 2
+        // func(1, 2);//   1 2
+        // func.call(obj, 1, 2);// qianzhixiang 1 2
+        // func.apply(obj, [1, 2]);// qianzhixiang 1 2
+
+
+        // 箭头函数
+        let obj = {
+            name: "qianzhixiang",
+            func: (a, b) => {
+                console.log(this.name, a, b);
+            }
+        };
+        obj.func(1, 2); // 1 2
+        let func = obj.func;
+        func(1, 2); //   1 2
+        let func_ = func.bind(obj);
+        func_(1, 2);//  1 2
+        func(1, 2);//   1 2
+        func.call(obj, 1, 2);// 1 2
+        func.apply(obj, [1, 2]);//  1 2
+
+
+        // 箭头函数想用call
+        let obj = {
+            name: "qianzhixiang",
+            func(a, b) {
+                return (a, b) => {
+                    console.log(this.name, a, b);
+                }
+            }
+        };
+        obj.func(1, 2); // 1 2
+        let func = obj.func;
+        func(1, 2); //   1 2
+        let func_ = func.bind(obj);
+        func_()(1, 2);// qianzhixiang 1 2
+        // func(1, 2);//   1 2
+        // func.call(obj, 1, 2);// 1 2
+        // func.apply(obj, [1, 2]);//  1 2
+    </script>
+</body>
+
+</html>

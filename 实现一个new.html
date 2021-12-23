@@ -35,6 +35,32 @@
     gro.hasOwnProperty('name')//true
     gro.hasOwnProperty('age')//true
     gro.hasOwnProperty('sayName')//false
+
+    let myNew2 = function(Parent,...reset){
+      let obj = Object.create(Parent.prototype)
+      let res = Parent.apply(obj,reset)
+      return typeof res === 'object' ? res : obj
+    }
+
+
+    let myNew3 = function(Parent,...reset){
+      let obj = Object.create(Parent.prototype)
+      let res = Parent.apply(obj,reset)
+      return typeof res === 'object' ? res : obj
+    }
+
+    let myNew4=function(P,...reset){
+      const obj = Object.create(P.prototype)
+      let res= P.apply(obj,reset)
+      return typeof res==='object'?res:obj
+    }
+
+    let myNew5=function(P,...reset){
+      const obj = Object.create(P.prototype)
+      let res = P.apply(obj,reset)
+      return typeof res === 'object' ? res:obj
+    }
+
   </script>
 </body>
 </html>

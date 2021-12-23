@@ -51,6 +51,13 @@
     Super.myCall(child1,18)
 
 // 参考文章：https://www.jianshu.com/p/83ecbcd09246
+
+Function.prototype.myCall = function(obj,args){
+  obj.fn = this || window
+  let res = obj.fn(...args)
+  delete obj.fn
+  return res
+}
   </script>
 </body>
 </html>
