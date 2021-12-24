@@ -21,6 +21,14 @@
       return Object.keys(obj)
     }
     console.log(fn([1,1,1,2,3,5,4,5,4,6,8,7,9,9,9,10,18,18,18]));
+
+    function fn(arr) {
+      let obj = {}
+      arr.forEach((item)=>{
+        obj[item] = '3'
+      })
+      return Object.keys(obj)
+    }
   </script>
 </body>
 

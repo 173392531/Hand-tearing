@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        Array.prototype.my_reduce = function (callback, initialValue) {
+            if (!Array.isArray(this) || !this.length || typeof callback !== 'function') {
+                return []
+            } else {
+                // 判断是否有初始值
+                let hasInitialValue = initialValue !== undefined;
+                let value = hasInitialValue ? initialValue : this[0];
+                for (let index = hasInitialValue ? 0 : 1; index < this.length; index++) {
+                    const element = this[index];
+                    value = callback(value, element)
+                }
+                return value
+            }
+        }
+
+        let arr = [1, 2, 3, 4, 5]
+        let res = arr.my_reduce((pre, cur) => {
+            // console.log(pre, cur, i, arr)
+            return pre + cur
+        }, 10)
+        console.log(res)//25
+
+        Array.prototype.myReduce = function(callback,init){
+            const hasInitVal = init !== undefined
+            let value = hasInitVal ? init : this[0]
+            for(let index = hasInitVal ? 0 : 1;index < this.length;index++){
+                const el = this[index]
+                value = callback(value,el)
+            }
+            return value
+        }
+    </script>
+</body>
+
+</html>
