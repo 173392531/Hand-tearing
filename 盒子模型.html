@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="box1"></div>
+    <div class="box2"></div>
+    <span class="span1">哈哈哈哈哈哈哈line1</span>
+    <span class="span2">哈哈哈阿萨德的的的点点滴滴line2</span>
+    <script>
+        function a() {
+            var name = 'dov'
+            return function(){
+                return name
+            }
+        }
+        var b = a()
+        console.log(b())
+        console.log(b)
+    </script>
+</body>
+<style>
+    .box1{
+        width: 200px;
+        height: 200px;
+        border: 5px solid black;
+        padding: 5px;
+        margin: 5px;
+        box-sizing: border-box;
+    }
+    .box2{
+        width: 100%;
+        height: 200px;
+        padding: 10px;
+        background-color: blue;
+    }
+    .span1{
+        margin: 10px;
+    }
+    .span2{
+        margin: 10px;
+    }
+    /* body{
+        padding: 10px;
+    } */
+    *{
+        padding: 0;
+        margin: 0;
+    }
+</style>
+</html>

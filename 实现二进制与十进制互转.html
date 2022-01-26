@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // 二进制转十进制
+
+        function binaryToDecimal(num) {
+            let negative = false;
+            if (num < 0) {
+                num = -num;
+                negative = true;
+            }
+            num += "";
+            let point = num.indexOf(".");
+            let int;
+            let intDecimal = 0;
+            let float;
+            let floatDecimal = 0;
+
+            if (point > -1) {
+                int = num.slice(0, point);
+                float = `${num.slice(point + 1)}`;
+            } else {
+                int = num;
+            }
+            if (int) {
+                for (let i = 0; i < int.length; i++) {
+                    intDecimal += int[int.length - i - 1] * Math.pow(2, i);
+                }
+            }
+
+            if (float) {
+                for (let i = 0; i < float.length; i++) {
+                    floatDecimal += float[i] * Math.pow(2, -(i + 1));
+                }
+            }
+            let result = "";
+            if (negative) {
+                result += "-";
+            }
+            result += intDecimal + floatDecimal;
+            return +result;
+        }
+
+        console.log('!binaryToDecimal',binaryToDecimal(1101));
+        
+        // 十进制转二进制
+
+        function decimalToBinary(num) {
+            let negative = false;
+            if (num < 0) {
+                num = -num;
+                negative = true;
+            }
+            num += "";
+            let point = num.indexOf(".");
+            let int;
+            let intBinary = "";
+            let float;
+            let floatBinary = "";
+
+            if (point > -1) {
+                int = num.slice(0, point);
+                float = Number(`0${num.slice(point)}`);
+            } else {
+                int = num;
+            }
+            if (int) {
+                int = +int;
+                while (int >= 1) {
+                    intBinary = (int % 2) + intBinary;
+                    int = (int / 2) | 0;
+                }
+            }
+
+            if (float) {
+                while (float) {
+                    float *= 2;
+                    if (float >= 1) {
+                        floatBinary += 1;
+                    } else {
+                        floatBinary += 0;
+                    }
+                    float = float % 1;
+                }
+            }
+            let result = "";
+            if (negative) {
+                result += "-";
+            }
+            result += `${intBinary || 0}.${floatBinary}`;
+            return result;
+        }
+
+        console.log('!decimalToBinary',decimalToBinary(13));
+        
+
+        function tenToTwo(num) {
+            var temp = 2,b = null,arr=[]
+            while(temp != 0){
+                b=num%2
+                temp = parseInt(num/2)
+                num=temp
+                arr.unshift(b)
+            }
+            return arr.join('')
+        }
+        console.log('!tenToTwo',tenToTwo(35));
+        
+    </script>
+</body>
+
+</html>
