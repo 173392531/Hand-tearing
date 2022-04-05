@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // https://www.jianshu.com/p/1785c2cecb44
+        const combineReducers = (reducers) => {
+            return (state = {}, action) => {
+                return Object.keys(reducers).reduce((nextState, key) => {
+                    //key: count,key
+                    //state[key]:当前遍历的reducer先前的state值
+                    //nextState[key]:当前遍历的reducer变化后的state值
+                    nextState[key] = reducers[key](state[key], action);
+                    return nextState;
+                }, {});
+            };
+        };
+        //调用combineReducers,传入所有的reducers
+        const reducers = combineReducers({
+            count,
+            alert
+        })
+    </script>
+</body>
+
+</html>
