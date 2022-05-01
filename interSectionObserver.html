@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <ul id="list"></ul>
+    <div class="loadmore" id="loadmore">点击加载更多</div>
+    
+    
+    <script>
+        const ulDom = document.getElementById('list');
+        const loadmoreDom = document.getElementById('loadmore');
+        const MAX_LENGTH = 48;
+        const LIMIT = 12;
+        let loading = false;
+        let id = 1;
+        // 渲染dom
+        function render() {
+            let html = '';
+            for (let i = 0; i < LIMIT; i++) {
+                html += `
+                <li>
+                    <img src="../images/image1.jpg" alt="">
+                    <div>
+                        <p>item${id++}</p>
+                        <p>这里是haorooms博客测试。</p>
+                    </div>
+                </li>`;
+            }
+            ulDom.insertAdjacentHTML('beforeend', html);
+            if (id < MAX_LENGTH) {
+                loadmoreDom.innerHTML = '点击加载更多';
+            } else {
+                loadmoreDom.innerHTML = '我也是有底线的';
+            }
+            loading = false;
+        }
+        render();
+    
+        // 加载更多
+        function loadmore() {
+            if (id >= MAX_LENGTH || loading) return;
+            loading = true;
+            loadmoreDom.innerHTML = '<img class="loading" src="../images/loading.png" alt="">加载中...';
+            // 模拟异步加载
+            setTimeout(() => {
+                render();
+            }, 1000);
+        }
+    
+        // 交叉观察器
+        const intersectionObserver = new IntersectionObserver((entries) => {
+            if (entries[0].isIntersecting && !loading && id < MAX_LENGTH) {
+                loadmore();
+            }
+        }, { threshold: 0.8 });
+        intersectionObserver.observe(loadmoreDom);
+    
+        // 点击加载更多
+        loadmoreDom.addEventListener('click', (e) => {
+            loadmore();
+        });
+        </script>
+</body>
+
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script src="https://unpkg.com/ml5@latest/dist/ml5.min.js"></script>
+    <script>
+        const img = 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg.jj20.com%2Fup%2Fallimg%2F1111%2F10151Q15453%2F1Q015115453-9-1200.jpg&refer=http%3A%2F%2Fimg.jj20.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1653846188&t=71cfffa5ceebbe40173aa422d8fe97b7'
+        const bodypix = ml5.bodyPix(modelReady);
+
+        function modelReady() {
+            // segment the image given
+            bodypix.segment(img, gotResults);
+        }
+
+        function gotResults(error, result) {
+            if (error) {
+                console.log(error);
+                return;
+            }
+            // log the result
+            console.log(result.backgroundMask);
+        }
+    </script>
+</body>
+
+</html>
